@@ -1,4 +1,4 @@
-# Django Project Template
+# Django CRUD Project
 
 This is simple implementaion od Django CRUD
 
