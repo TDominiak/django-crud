@@ -1,0 +1,55 @@
+{% extends "soil_sample_register/base.html" %}
+{% block content %}
+
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+            <form method="get">
+				{{myFilter.form}}
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+		</div>
+	</div>
+    <a href="{% url 'soil_sample_exporter' %}" class="btn btn-primary">
+        Save as .csv
+    </a></div>
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Nr_prob</td>
+            <td>Oznakowanie</td>
+            <td>Kategoria gleby</td>
+            <td>pHwKCL</td>
+            <td>Potrzeby wapn</td>
+            <td>
+                <a href="{% url 'soil_sample_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for soil_sample in soil_sample_list %}
+            <tr>
+                <td>{{soil_sample.sample_id}}</td>
+                <td>{{soil_sample.marking}}</td>
+                <td>{{soil_sample.soil_category}}</td>
+                <td>{{soil_sample.soil_reaction}}</td>
+                <td>{{soil_sample.needs}}</td>
+                <td>
+                    <a href="{% url 'soil_sample_update' soil_sample.sample_id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'soil_sample_delete' soil_sample.sample_id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
